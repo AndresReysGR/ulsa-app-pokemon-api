@@ -17,7 +17,7 @@ let getPokemonData = async ()=> {
     pokemonName.innerText = name;
 
     abilities.forEach(element=>{
-        pokemonAbilities.innerHTML = `<li>${element.name}</li>`;
+        pokemonAbilities.innerHTML = `<li>${element.ability.name}</li>`;
     });
 
     pokemonHeight.innerText = `La altura es: ${height}`;
