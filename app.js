@@ -8,6 +8,11 @@ const pokemonAbilities=document.getElementById(`pokemon-abilities`)
 
 const pokemonApiUrl = 'https://pokeapi.co/api/v2/';
 
+let getPokemonAbilityData = async url=>{
+    const response =await fetch(url);
+    const abilityData =await response.json();
+    return abilityData;
+}
 let getPokemonData = async ()=> {
     const respose = await fetch(`${pokemonApiUrl}pokemon/500/`);
     const pokemon = await respose.json();
@@ -16,8 +21,17 @@ let getPokemonData = async ()=> {
     const frontImg =pokemon.sprites.front_default;
     pokemonName.innerText = name;
 
-    abilities.forEach(element=>{
-        pokemonAbilities.innerHTML = `<li>${element.ability.name}</li>`;
+    abilities.forEach(async element=>{
+        const abilityData = await getPokemonAbilityData(element.ability.url);
+        const effect_entries=abilityData.effect_entries;
+        pokemonAbilities.abilities.innerHTML += `<li>${element.ability.name}
+        <div>Efecto:
+            <ul>
+                ${effect_entries[0].effect}
+            </ul>
+            </div>
+            </li>`
+
     });
 
     pokemonHeight.innerText = `La altura es: ${height}`;
